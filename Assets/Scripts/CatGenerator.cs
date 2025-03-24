@@ -144,7 +144,9 @@ public class CatGenerator : MonoBehaviour
         {
             targetCatImage.enabled = true;
             targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
-            targetCatImage.color = targetCat.GetComponent<SpriteRenderer>().color;
+            targetCatImage.rectTransform.localScale = Vector3.one; // Restart
+            targetCatImage.SetNativeSize();
+            targetCatImage.rectTransform.localScale *= 2f;
         }
 
         goodClick = false;
