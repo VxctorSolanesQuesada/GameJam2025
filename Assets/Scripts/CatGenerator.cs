@@ -64,11 +64,7 @@ public class CatGenerator : MonoBehaviour
                     }
                 }
             }
-
-
-    }
-
-     
+        }
     }
 
     void SpawnCats()
