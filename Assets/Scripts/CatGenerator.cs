@@ -1,85 +1,75 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class CatGenerator : MonoBehaviour
 {
-    private Camera _mainCamera;
 
     public GameObject[] cats;
-    public float timeBetweenAppearances = 6f;
+    public float timeBetweenAppearances = 3f;
     public Image targetCatImage;
     public Text scoreText;
     private int score = 0;
+    private bool goodClick = false;
 
     public GameObject targetCat;
-    private int targetCatIndex = -1;
+    public int targetCatIndex = -1;
     private float waitTime;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        _mainCamera = Camera.main;
         waitTime = timeBetweenAppearances;
+        SpawnCats(5,3);
     }
 
-    // Update is called once per frame
     void Update()
     {
         waitTime -= Time.deltaTime;
 
-        //Cuando el contador llega a 0 reinicia las posiciones de los gatos
-        if (waitTime <= 0f)
+        if (waitTime <= 0f || goodClick)
         {
-            SpawnCats();
-            waitTime = timeBetweenAppearances;
-        }
+            goodClick = false;
 
-        if (Input.GetMouseButtonDown(0))  // Detectar clic izquierdo
-        {
-            RaycastHit2D raycastHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));
-
-            if (raycastHit.collider != null)
+            // Condiciones para la puntuacion
+            if (score <= 3)
             {
-                // Comprobamos si el raycast tocó algo
-                Debug.Log("Raycast tocó: " + raycastHit.transform.gameObject.name);
-
-                // Verificar si el objeto tocado es uno de los gatos
-                foreach (var cat in cats)
-                {
-                    if (raycastHit.transform.gameObject == cat)
-                    {
-                        if (cat == targetCat)
-                        {
-                            Debug.Log("¡Hiciste clic en el gato objetivo!");
-                        }
-                        else
-                        {
-                            Debug.Log("Hiciste clic en un gato, pero no es el objetivo.");
-                        }
-                        break;
-                    }
-                }
+                SpawnCats(5, 3);
+            }
+            else if (score >= 3 && score < 10)
+            {
+                SpawnCats(10, 5);
+            }
+            else if (score >= 10 && score < 15)
+            {
+                SpawnCats(15, 7);
+            }
+            else if (score >= 15 && score < 20)
+            {
+                SpawnCats(20, 10);
+            }
+            else if (score >= 20 && score < 25)
+            {
+                SpawnCats(25, 10);
+            }
+            else if (score >= 25 && score < 30)
+            {
+                SpawnCats(30, 10);
+            }
+            else if (score >= 35)
+            {
+                SpawnCats(30, 10);
+                timeBetweenAppearances = 2.5f;
             }
 
 
-    }
-
-     
-    }
-
-    void SpawnCats()
-    {
-        // Error check
-        if (cats.Length == 0)
-        {
-            Debug.LogError("Cats are not assigned!");
-            return; 
+            waitTime = timeBetweenAppearances;
         }
+    }
 
+
+    void SpawnCats(int numberOfCats, int maxCatTypes)
+    {
+     
         // Destruimos los gatos anteriores si hay
         GameObject[] existingCats = GameObject.FindGameObjectsWithTag("Cat");
         if (existingCats.Length != 0)
@@ -91,30 +81,66 @@ public class CatGenerator : MonoBehaviour
         }
 
         // Posiciones de la pantalla
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width-300, Screen.height));
+        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width - 300, Screen.height));
         List<Vector3> catPositions = new List<Vector3>();
 
-        // Spawnear gatos
-        int catCount = cats.Length;
-        for (int i = 0; i < catCount; i++)
+        // Elegir el gato correcto aleatoriamente entre los tipos disponibles
+        int targetCatIndex = Random.Range(0, maxCatTypes);
+
+        // Generar una lista de todos los índices de gatos a spawnear
+        List<int> catsToSpawn = new List<int>();
+
+        // Primero agregamos los gatos incorrectos (no incluimos el gato correcto)
+        for (int i = 0; i < numberOfCats - 1; i++)
         {
-            Vector3 spawnPosition = GetRandomPosition(screenBounds, catPositions);
-            GameObject spawnedCat = Instantiate(cats[i], spawnPosition, Quaternion.identity);
+            int randomCat = Random.Range(0, maxCatTypes);
 
-            targetCatIndex = Random.Range(0, cats.Length);
-            targetCat = cats[targetCatIndex];
-
-            // Actualizamos la imagen del gato en el Canvas
-            if (targetCatImage != null)
-             {
-                targetCatImage.enabled = true;
-                targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
-                targetCatImage.color = targetCat.GetComponent<SpriteRenderer>().color;
+            // Aseguramos que no se seleccione el gato correcto
+            while (randomCat == targetCatIndex)
+            {
+                randomCat = Random.Range(0, maxCatTypes);
             }
 
-            catPositions.Add(spawnPosition);
+            catsToSpawn.Add(randomCat); 
         }
+
+        // Insertamos el gato correcto en una posición aleatoria
+        int targetCatPosition = Random.Range(0, numberOfCats);  
+        catsToSpawn.Insert(targetCatPosition, targetCatIndex); 
+
+        // Generamos los gatos en la pantalla
+        for (int i = 0; i < numberOfCats; i++)
+        {
+            Vector3 spawnPosition = GetRandomPosition(screenBounds, catPositions);
+            GameObject spawnedCat = Instantiate(cats[catsToSpawn[i]], spawnPosition, Quaternion.identity);
+            catPositions.Add(spawnPosition);
+
+            // Añadimos el componente correspondiente según si es el gato correcto o no
+            if (i == targetCatPosition)
+            {
+                spawnedCat.AddComponent<CatCorrect>();  
+            }
+            else
+            {
+                spawnedCat.AddComponent<CatWrong>();
+            }
+        }
+
+        // Actualizamos la imagen del gato correcto en el UI
+        GameObject targetCat = cats[targetCatIndex];
+        if (targetCatImage != null)
+        {
+            targetCatImage.enabled = true;
+            targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
+            targetCatImage.color = targetCat.GetComponent<SpriteRenderer>().color;
+        }
+
+        goodClick = false;
     }
+
+
+
+
     // Funcion para comprobar que los gatos no spawnean uno encima del otro
     Vector3 GetRandomPosition(Vector2 screenBounds, List<Vector3> catPositions)
     {
@@ -140,10 +166,10 @@ public class CatGenerator : MonoBehaviour
 
         return newPosition;
     }
-
-    // Actualizar el texto del puntaje en el Canvas
-    void UpdateScoreText()
+    public void UpdateScoreText()
     {
+        score++;
+        goodClick = true;
         if (scoreText != null)
         {
             scoreText.text = score.ToString();
