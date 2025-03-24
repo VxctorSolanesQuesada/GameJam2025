@@ -252,7 +252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 808467066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365ac2e488bd0944e83a36b1630d017b, type: 3}
+  m_Script: {fileID: 11500000, guid: d64468f5bc0242f4bb11ff6cb99a8bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cats:
@@ -266,7 +266,7 @@ MonoBehaviour:
   - {fileID: 4608092584005147136, guid: 48ef2765ebeac6e46a6e515b152138f7, type: 3}
   - {fileID: 4608092584005147136, guid: 4be80b50d366bf645ade1107a6827a68, type: 3}
   - {fileID: 4608092584005147136, guid: fe112255733776f4d95b3364cd497230, type: 3}
-  timeBetweenAppearances: 1
+  timeBetweenAppearances: 3
   targetCatImage: {fileID: 415564108}
   scoreText: {fileID: 2057584330}
   targetCat: {fileID: 0}
