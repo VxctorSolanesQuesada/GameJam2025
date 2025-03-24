@@ -14,6 +14,7 @@ public class CatGenerator : MonoBehaviour
     public Image targetCatImage;
     public Text scoreText;
     private int score = 0;
+    public Color color1;
 
     public GameObject targetCat;
     private int targetCatIndex = -1;
@@ -36,34 +37,6 @@ public class CatGenerator : MonoBehaviour
         {
             SpawnCats();
             waitTime = timeBetweenAppearances;
-        }
-
-        if (Input.GetMouseButtonDown(0))  // Detectar clic izquierdo
-        {
-            RaycastHit2D raycastHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));
-
-            if (raycastHit.collider != null)
-            {
-                // Comprobamos si el raycast tocó algo
-                Debug.Log("Raycast tocó: " + raycastHit.transform.gameObject.name);
-
-                // Verificar si el objeto tocado es uno de los gatos
-                foreach (var cat in cats)
-                {
-                    if (raycastHit.transform.gameObject == cat)
-                    {
-                        if (cat == targetCat)
-                        {
-                            Debug.Log("¡Hiciste clic en el gato objetivo!");
-                        }
-                        else
-                        {
-                            Debug.Log("Hiciste clic en un gato, pero no es el objetivo.");
-                        }
-                        break;
-                    }
-                }
-            }
         }
     }
 
@@ -91,13 +64,14 @@ public class CatGenerator : MonoBehaviour
         List<Vector3> catPositions = new List<Vector3>();
 
         // Spawnear gatos
+        targetCatIndex = Random.Range(0, cats.Length);
+
         int catCount = cats.Length;
         for (int i = 0; i < catCount; i++)
         {
             Vector3 spawnPosition = GetRandomPosition(screenBounds, catPositions);
             GameObject spawnedCat = Instantiate(cats[i], spawnPosition, Quaternion.identity);
 
-            targetCatIndex = Random.Range(0, cats.Length);
             targetCat = cats[targetCatIndex];
 
             // Actualizamos la imagen del gato en el Canvas
@@ -106,6 +80,7 @@ public class CatGenerator : MonoBehaviour
                 targetCatImage.enabled = true;
                 targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
                 targetCatImage.color = targetCat.GetComponent<SpriteRenderer>().color;
+                color1= targetCat.GetComponent<SpriteRenderer>().color;
             }
 
             catPositions.Add(spawnPosition);
