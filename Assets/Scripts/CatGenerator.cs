@@ -26,7 +26,14 @@ public class CatGenerator : MonoBehaviour
     {
         waitTime -= Time.deltaTime;
 
-        if (waitTime <= 0f || goodClick)
+        if (waitTime <= 0f)
+        {
+            Debug.Log("Te has quedado sin tiempo!");
+            GameManager.Instance.GameOver();
+            return;  
+        }
+
+        if (goodClick)
         {
             goodClick = false;
 
@@ -59,6 +66,7 @@ public class CatGenerator : MonoBehaviour
             {
                 SpawnCats(30, 10);
                 timeBetweenAppearances = 2.5f;
+
             }
 
 
@@ -123,6 +131,10 @@ public class CatGenerator : MonoBehaviour
             else
             {
                 spawnedCat.AddComponent<CatWrong>();
+            }
+            if (score >= 35)
+            {
+                spawnedCat.AddComponent<MoveLeftRight>();
             }
         }
 
