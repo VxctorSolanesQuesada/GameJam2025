@@ -15,7 +15,6 @@ public class MoveLeftRight : MonoBehaviour
 
     void Update()
     {
-        // Calculamos la nueva posición X basándonos en la posición inicial
         float newPosX = startPositionX + Mathf.Sin(Time.time * speed) * amplitude;
         transform.position = new Vector3(newPosX, transform.position.y, transform.position.z);
     }
