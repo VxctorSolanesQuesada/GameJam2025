@@ -270,6 +270,7 @@ MonoBehaviour:
   targetCatImage: {fileID: 415564108}
   scoreText: {fileID: 2057584330}
   targetCat: {fileID: 0}
+  targetCatIndex: -1
 --- !u!4 &808467068
 Transform:
   m_ObjectHideFlags: 0
