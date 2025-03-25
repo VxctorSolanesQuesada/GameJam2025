@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &79588530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 79588531}
+  - component: {fileID: 79588532}
+  m_Layer: 0
+  m_Name: PointsControl
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &79588531
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79588530}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 525.3266, y: 330.5456, z: -190.08345}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &79588532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79588530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb2488fe38adf74fb2571e60361da10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puntos: 0
 --- !u!224 &194731170 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7885952828753666910, guid: 174af73067e819147924834cc6d40cca, type: 3}
@@ -392,6 +437,7 @@ MonoBehaviour:
   - {fileID: 4608092584005147136, guid: 4be80b50d366bf645ade1107a6827a68, type: 3}
   - {fileID: 4608092584005147136, guid: fe112255733776f4d95b3364cd497230, type: 3}
   targetCatImage: {fileID: 415564108}
+  puntos: {fileID: 79588532}
   scoreText: {fileID: 2057584330}
   targetCat: {fileID: 0}
   targetCatIndex: -1
