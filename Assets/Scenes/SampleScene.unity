@@ -631,6 +631,7 @@ MonoBehaviour:
   targetCat: {fileID: 0}
   targetCatIndex: -1
   end: 0
+  noTime: 0
 --- !u!4 &808467068
 Transform:
   m_ObjectHideFlags: 0
