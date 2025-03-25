@@ -30,4 +30,8 @@ public class GameOverScreen : MonoBehaviour
     {
         SceneManager.LoadScene("Start scene");
     }
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
