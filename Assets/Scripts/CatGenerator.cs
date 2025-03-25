@@ -8,6 +8,7 @@ public class CatGenerator : MonoBehaviour
     public GameObject[] cats;
     private float timeBetweenAppearances = 4f;
     public Image targetCatImage;
+    public PointsControl puntos;
     public Text scoreText;
     private int score = 0;
     private bool goodClick = false;
@@ -20,6 +21,7 @@ public class CatGenerator : MonoBehaviour
     {
         waitTime = timeBetweenAppearances;
         SpawnCats(5, 3);
+        puntos.RestartScore();
     }
 
     void Update()
@@ -210,6 +212,7 @@ public class CatGenerator : MonoBehaviour
     public void UpdateScoreText()
     {
         score++;
+        puntos.SumarPuntos(score);
         goodClick = true;
         if (scoreText != null)
         {
