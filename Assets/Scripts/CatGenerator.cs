@@ -173,7 +173,6 @@ public class CatGenerator : MonoBehaviour
         }
 
         // Actualizamos la imagen del gato correcto en el UI
-        // Obtén el objeto "targetCat" de la lista según el índice
         GameObject targetCat = cats[targetCatIndex];
 
         Transform spriteTransform = targetCat.transform.Find("Sprite");
