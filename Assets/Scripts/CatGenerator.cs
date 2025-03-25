@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +9,8 @@ public class CatGenerator : MonoBehaviour
     private float timeBetweenAppearances = 4f;
     public Image targetCatImage;
     public PointsControl puntos;
-    public TMP_Text scoreText;
-    private int score = 0;
+    public Text scoreText;
+    public int score = 0;
     private bool goodClick = false;
 
     public GameObject targetCat;
@@ -22,7 +21,6 @@ public class CatGenerator : MonoBehaviour
     {
         waitTime = timeBetweenAppearances;
         SpawnCats(5, 3);
-        puntos.RestartScore();
     }
 
     void Update()
@@ -31,6 +29,7 @@ public class CatGenerator : MonoBehaviour
 
         if (waitTime <= 0f)
         {
+            puntos.puntos = score;
             Debug.Log("Te has quedado sin tiempo!");
             GameManager.Instance.GameOver();
             return;  
@@ -138,7 +137,7 @@ public class CatGenerator : MonoBehaviour
 
             }
 
-            if (score >=5)
+            if (score >=15)
             {
                 spawnedCat.AddComponent<RandomRotation>();
             }
@@ -162,28 +161,21 @@ public class CatGenerator : MonoBehaviour
         }
 
         // Actualizamos la imagen del gato correcto en el UI
-        // Obtén el objeto "targetCat" de la lista según el índice
         GameObject targetCat = cats[targetCatIndex];
-
-        Transform spriteTransform = targetCat.transform.Find("Sprite");
-
-        if (spriteTransform != null)
+        if (targetCatImage != null)
         {
-            SpriteRenderer spriteRenderer = spriteTransform.GetComponent<SpriteRenderer>();
-
-            if (spriteRenderer != null && targetCatImage != null)
-            {
-                targetCatImage.enabled = true;
-                targetCatImage.sprite = spriteRenderer.sprite;
-                targetCatImage.rectTransform.localScale = Vector3.one;
-                targetCatImage.SetNativeSize();
-                targetCatImage.rectTransform.localScale *= 2f;
-            }
+            targetCatImage.enabled = true;
+            targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
+            targetCatImage.rectTransform.localScale = Vector3.one; // Restart
+            targetCatImage.SetNativeSize();
+            targetCatImage.rectTransform.localScale *= 2f;
         }
-
 
         goodClick = false;
     }
+
+
+
 
     // Funcion para comprobar que los gatos no spawnean uno encima del otro
     Vector3 GetRandomPosition(Vector2 screenBounds, List<Vector3> catPositions)
@@ -213,7 +205,6 @@ public class CatGenerator : MonoBehaviour
     public void UpdateScoreText()
     {
         score++;
-        puntos.SumarPuntos(score);
         goodClick = true;
         if (scoreText != null)
         {

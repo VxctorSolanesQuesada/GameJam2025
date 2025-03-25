@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;  
-
+    public GameOverScreen GameOverScreen;
     private void Awake()
     {
         if (Instance == null)
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("¡Juego terminado! Has fallado.");
 
         // Recargar la escena después de 1 segundo
-        SceneManager.LoadScene("Game Over");
+        GameOverScreen.GameOverMenu();
     }
 
     private void RestartGame()

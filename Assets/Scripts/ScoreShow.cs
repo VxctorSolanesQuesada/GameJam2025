@@ -14,13 +14,13 @@ public class cat : MonoBehaviour
         scoreText.text = null;
         score = FindObjectOfType<PointsControl>();
         UpdateScoreText();
-    }
 
-    void Update()
+    }
+    private void FixedUpdate()
     {
         UpdateScoreText();
-    }
 
+    }
     void UpdateScoreText()
     {
         if (scoreText != null && score != null)
