@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class CatGenerator : MonoBehaviour
     private float timeBetweenAppearances = 4f;
     public Image targetCatImage;
     public PointsControl puntos;
-    public Text scoreText;
+    public TMP_Text scoreText;
     public int score = 0;
     private bool goodClick = false;
 
@@ -29,10 +30,9 @@ public class CatGenerator : MonoBehaviour
 
         if (waitTime <= 0f)
         {
-            puntos.puntos = score;
             Debug.Log("Te has quedado sin tiempo!");
             GameManager.Instance.GameOver();
-            return;  
+            return;
         }
 
         if (goodClick)
@@ -92,7 +92,7 @@ public class CatGenerator : MonoBehaviour
         }
 
         // Posiciones de la pantalla
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width - 300, Screen.height -300));
+        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width - 300, Screen.height - 300));
         List<Vector3> catPositions = new List<Vector3>();
 
         // Elegir el gato correcto aleatoriamente entre los tipos disponibles
@@ -137,7 +137,7 @@ public class CatGenerator : MonoBehaviour
 
             }
 
-            if (score >=15)
+            if (score >= 5)
             {
                 spawnedCat.AddComponent<RandomRotation>();
             }
@@ -148,34 +148,44 @@ public class CatGenerator : MonoBehaviour
             if (score >= 0 && score < 5)
             {
                 moveRandomlyScript.SetSpeeds(0.5f, 0.5f);
-            } else if (score >= 5 && score < 15)
+            }
+            else if (score >= 5 && score < 15)
             {
                 moveRandomlyScript.SetSpeeds(1f, 1f);
-            } else if (score >= 15 && score < 25)
+            }
+            else if (score >= 15 && score < 25)
             {
                 moveRandomlyScript.SetSpeeds(1.5f, 1.5f);
-            } else if (score >= 25)
+            }
+            else if (score >= 25)
             {
                 moveRandomlyScript.SetSpeeds(2f, 2f);
             }
         }
 
         // Actualizamos la imagen del gato correcto en el UI
+        // Obtén el objeto "targetCat" de la lista según el índice
         GameObject targetCat = cats[targetCatIndex];
-        if (targetCatImage != null)
+
+        Transform spriteTransform = targetCat.transform.Find("Sprite");
+
+        if (spriteTransform != null)
         {
-            targetCatImage.enabled = true;
-            targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
-            targetCatImage.rectTransform.localScale = Vector3.one; // Restart
-            targetCatImage.SetNativeSize();
-            targetCatImage.rectTransform.localScale *= 2f;
+            SpriteRenderer spriteRenderer = spriteTransform.GetComponent<SpriteRenderer>();
+
+            if (spriteRenderer != null && targetCatImage != null)
+            {
+                targetCatImage.enabled = true;
+                targetCatImage.sprite = spriteRenderer.sprite;
+                targetCatImage.rectTransform.localScale = Vector3.one;
+                targetCatImage.SetNativeSize();
+                targetCatImage.rectTransform.localScale *= 2f;
+            }
         }
+
 
         goodClick = false;
     }
-
-
-
 
     // Funcion para comprobar que los gatos no spawnean uno encima del otro
     Vector3 GetRandomPosition(Vector2 screenBounds, List<Vector3> catPositions)
