@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("¡Juego terminado! Has fallado.");
 
         // Recargar la escena después de 1 segundo
-        Invoke("RestartGame", 1f);
+        SceneManager.LoadScene("Game Over");
     }
 
     private void RestartGame()
