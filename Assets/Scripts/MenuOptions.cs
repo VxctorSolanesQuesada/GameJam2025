@@ -10,6 +10,11 @@ public class MenuOptions : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
 
     }
+    public void Menu()
+    {
+        SceneManager.LoadScene("Start scene");
+
+    }
     public void EndGame()
     {
 
