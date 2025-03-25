@@ -6,7 +6,7 @@ public class CatGenerator : MonoBehaviour
 {
 
     public GameObject[] cats;
-    public float timeBetweenAppearances = 3f;
+    private float timeBetweenAppearances = 4f;
     public Image targetCatImage;
     public Text scoreText;
     private int score = 0;
@@ -65,15 +65,16 @@ public class CatGenerator : MonoBehaviour
             else if (score >= 35)
             {
                 SpawnCats(30, 10);
-                timeBetweenAppearances = 2.5f;
-
             }
 
+            if (score % 5 == 0 && timeBetweenAppearances >= 2f)
+            {
+                timeBetweenAppearances -= 0.2f;
+            }
 
             waitTime = timeBetweenAppearances;
         }
     }
-
 
     void SpawnCats(int numberOfCats, int maxCatTypes)
     {
@@ -131,10 +132,29 @@ public class CatGenerator : MonoBehaviour
             else
             {
                 spawnedCat.AddComponent<CatWrong>();
+
             }
-            if (score >= 35)
+
+            if (score >=15)
             {
-                spawnedCat.AddComponent<MoveLeftRight>();
+                spawnedCat.AddComponent<RandomRotation>();
+            }
+
+            spawnedCat.AddComponent<MoveRandomly>();
+            MoveRandomly moveRandomlyScript = spawnedCat.GetComponent<MoveRandomly>();
+
+            if (score >= 0 && score < 5)
+            {
+                moveRandomlyScript.SetSpeeds(0.5f, 0.5f);
+            } else if (score >= 5 && score < 15)
+            {
+                moveRandomlyScript.SetSpeeds(1f, 1f);
+            } else if (score >= 15 && score < 25)
+            {
+                moveRandomlyScript.SetSpeeds(1.5f, 1.5f);
+            } else if (score >= 25)
+            {
+                moveRandomlyScript.SetSpeeds(2f, 2f);
             }
         }
 
@@ -190,4 +210,3 @@ public class CatGenerator : MonoBehaviour
         }
     }
 }
-
