@@ -135,7 +135,7 @@ public class CatGenerator : MonoBehaviour
 
             }
 
-            if (score >=0)
+            if (score >=5)
             {
                 spawnedCat.AddComponent<RandomRotation>();
             }
@@ -181,9 +181,6 @@ public class CatGenerator : MonoBehaviour
 
         goodClick = false;
     }
-
-
-
 
     // Funcion para comprobar que los gatos no spawnean uno encima del otro
     Vector3 GetRandomPosition(Vector2 screenBounds, List<Vector3> catPositions)
