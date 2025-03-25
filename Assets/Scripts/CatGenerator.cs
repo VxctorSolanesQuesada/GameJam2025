@@ -10,7 +10,7 @@ public class CatGenerator : MonoBehaviour
     public Image targetCatImage;
     public PointsControl puntos;
     public Text scoreText;
-    private int score = 0;
+    public int score = 0;
     private bool goodClick = false;
 
     public GameObject targetCat;
