@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class CatGenerator : MonoBehaviour
     private float timeBetweenAppearances = 4f;
     public Image targetCatImage;
     public PointsControl puntos;
-    public Text scoreText;
+    public TMP_Text scoreText;
     private int score = 0;
     private bool goodClick = false;
 
