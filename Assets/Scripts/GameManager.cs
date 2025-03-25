@@ -20,13 +20,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Debug.Log("¡Juego terminado! Has fallado.");
-
-        // Recargar la escena después de 1 segundo
         GameOverScreen.GameOverMenu();
+
     }
 
-    private void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }

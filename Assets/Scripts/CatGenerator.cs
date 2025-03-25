@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,7 @@ public class CatGenerator : MonoBehaviour
     public int targetCatIndex = -1;
     private float waitTime;
     public bool end = false;
+    public bool noTime = false;
 
     void Start()
     {
@@ -30,10 +32,12 @@ public class CatGenerator : MonoBehaviour
     {
         waitTime -= Time.deltaTime;
 
-        if (waitTime <= 0f && !end)
+        if (waitTime <= 0f && !end && !noTime)
         {   
+            noTime = true;
             Debug.Log("Te has quedado sin tiempo!");
             GameManager.Instance.GameOver();
+            return;
         }
 
         if (goodClick)
@@ -65,9 +69,13 @@ public class CatGenerator : MonoBehaviour
             {
                 SpawnCats(30, 11);
             }
-            else if (score >= 35)
+            else if (score >= 35 && score < 40)
             {
-                SpawnCats(30, 11);
+                SpawnCats(35, 11);
+            } 
+            else if (score >= 40)
+            {
+                SpawnCats(40, 11);
             }
 
             if (score % 5 == 0 && timeBetweenAppearances >= 2f)
