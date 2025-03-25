@@ -239,7 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 259d8ccdc36b48c4283b23634e493c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: {fileID: 0}
+  soundOnSprite: {fileID: 0}
+  soundOffSprite: {fileID: 0}
+  muteButtonImage: {fileID: 0}
 --- !u!1 &877325438
 GameObject:
   m_ObjectHideFlags: 0
