@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,17 @@ public class RandomRotation : MonoBehaviour
 
     void Start()
     {
-        float randomRotation = Random.Range(minRotation, maxRotation);
-        transform.rotation = Quaternion.Euler(0f, 0f, randomRotation);
+        Transform spriteTransform = transform.Find("Sprite"); 
+
+        if (spriteTransform != null)
+        {
+            float randomRotation = Random.Range(minRotation, maxRotation);
+
+            spriteTransform.rotation = Quaternion.Euler(0f, 0f, randomRotation);
+        }
+        else
+        {
+            Debug.LogError("No se encontró un objeto hijo llamado 'Sprite'.");
+        }
     }
 }

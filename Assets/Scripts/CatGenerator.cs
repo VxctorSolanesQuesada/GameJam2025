@@ -135,7 +135,7 @@ public class CatGenerator : MonoBehaviour
 
             }
 
-            if (score >=15)
+            if (score >=0)
             {
                 spawnedCat.AddComponent<RandomRotation>();
             }
@@ -159,15 +159,25 @@ public class CatGenerator : MonoBehaviour
         }
 
         // Actualizamos la imagen del gato correcto en el UI
+        // Obtén el objeto "targetCat" de la lista según el índice
         GameObject targetCat = cats[targetCatIndex];
-        if (targetCatImage != null)
+
+        Transform spriteTransform = targetCat.transform.Find("Sprite");
+
+        if (spriteTransform != null)
         {
-            targetCatImage.enabled = true;
-            targetCatImage.sprite = targetCat.GetComponent<SpriteRenderer>().sprite;
-            targetCatImage.rectTransform.localScale = Vector3.one; // Restart
-            targetCatImage.SetNativeSize();
-            targetCatImage.rectTransform.localScale *= 2f;
+            SpriteRenderer spriteRenderer = spriteTransform.GetComponent<SpriteRenderer>();
+
+            if (spriteRenderer != null && targetCatImage != null)
+            {
+                targetCatImage.enabled = true;
+                targetCatImage.sprite = spriteRenderer.sprite;
+                targetCatImage.rectTransform.localScale = Vector3.one;
+                targetCatImage.SetNativeSize();
+                targetCatImage.rectTransform.localScale *= 2f;
+            }
         }
+
 
         goodClick = false;
     }
