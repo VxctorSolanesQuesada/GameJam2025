@@ -21,7 +21,6 @@ public class CatGenerator : MonoBehaviour
     {
         waitTime = timeBetweenAppearances;
         SpawnCats(5, 3);
-        puntos.RestartScore();
     }
 
     void Update()
@@ -30,6 +29,7 @@ public class CatGenerator : MonoBehaviour
 
         if (waitTime <= 0f)
         {
+            puntos.puntos = score;
             Debug.Log("Te has quedado sin tiempo!");
             GameManager.Instance.GameOver();
             return;  
@@ -205,7 +205,6 @@ public class CatGenerator : MonoBehaviour
     public void UpdateScoreText()
     {
         score++;
-        puntos.SumarPuntos(score);
         goodClick = true;
         if (scoreText != null)
         {
