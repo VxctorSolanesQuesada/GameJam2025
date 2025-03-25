@@ -7,6 +7,7 @@ public class CatGenerator : MonoBehaviour
 {
 
     public GameObject[] cats;
+    public AudioSource audioSource;
     private float timeBetweenAppearances = 4f;
     public Image targetCatImage;
     public PointsControl puntos;
@@ -17,6 +18,7 @@ public class CatGenerator : MonoBehaviour
     public GameObject targetCat;
     public int targetCatIndex = -1;
     private float waitTime;
+    public bool end = false;
 
     void Start()
     {
@@ -28,11 +30,10 @@ public class CatGenerator : MonoBehaviour
     {
         waitTime -= Time.deltaTime;
 
-        if (waitTime <= 0f)
-        {
+        if (waitTime <= 0f && !end)
+        {   
             Debug.Log("Te has quedado sin tiempo!");
             GameManager.Instance.GameOver();
-            return;
         }
 
         if (goodClick)
@@ -54,19 +55,19 @@ public class CatGenerator : MonoBehaviour
             }
             else if (score >= 15 && score < 20)
             {
-                SpawnCats(20, 10);
+                SpawnCats(20, 8);
             }
             else if (score >= 20 && score < 25)
             {
-                SpawnCats(25, 10);
+                SpawnCats(25, 11);
             }
             else if (score >= 25 && score < 35)
             {
-                SpawnCats(30, 10);
+                SpawnCats(30, 11);
             }
             else if (score >= 35)
             {
-                SpawnCats(30, 10);
+                SpawnCats(30, 11);
             }
 
             if (score % 5 == 0 && timeBetweenAppearances >= 2f)

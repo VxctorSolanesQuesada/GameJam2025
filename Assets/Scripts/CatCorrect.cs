@@ -1,39 +1,35 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CatCorrect : MonoBehaviour
 {
     private CatGenerator catGen;
-    private AudioSource audioSource; 
-    private AudioClip correctSound;
+    private AudioSource audioSource;
+    private AudioClip[] correctSounds; // Array de sonidos
 
     void Start()
     {
         catGen = FindObjectOfType<CatGenerator>();
-        audioSource = GetComponent<AudioSource>(); 
+        audioSource = FindObjectOfType<AudioSource>();
 
-        // Cargar el archivo de audio desde la carpeta Resources
-        correctSound = Resources.Load<AudioClip>("MiauCorrec");
+        // Cargar los archivos de audio desde Resources
+        correctSounds = new AudioClip[]
+        {
+            Resources.Load<AudioClip>("MiauCorrect"),
+            Resources.Load<AudioClip>("MiauCorrect2")
+        };
     }
 
     void OnMouseDown()
     {
-        if (audioSource != null && correctSound != null)
+        if (audioSource != null && correctSounds.Length > 0)
         {
-            audioSource.clip = correctSound;
-            audioSource.Play();
-
-            // Detener el sonido después de 1 segundo
-            Invoke("StopSound", 1f); 
+            // Elegir un sonido aleatorio
+            AudioClip randomSound = correctSounds[Random.Range(0, correctSounds.Length)];
+            audioSource.PlayOneShot(randomSound);
         }
 
         // Actualizar la puntuación
         catGen.UpdateScoreText();
     }
-
-    // Método para detener el sonido
-    void StopSound()
-    {
-        audioSource.Stop(); 
-    }
 }
+

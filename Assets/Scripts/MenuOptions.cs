@@ -28,4 +28,9 @@ public class MenuOptions : MonoBehaviour
         Application.Quit();
     }
 
+    public void Credits()
+    {
+        SceneManager.LoadScene("Credits Scene");
+    }
+
 }
