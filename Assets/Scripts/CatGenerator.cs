@@ -33,7 +33,16 @@ public class CatGenerator : MonoBehaviour
         waitTime -= Time.deltaTime;
 
         if (waitTime <= 0f && !end && !noTime)
-        {   
+        {
+            GameObject[] existingCats = GameObject.FindGameObjectsWithTag("Cat");
+            if (existingCats.Length != 0)
+            {
+                foreach (GameObject cat in existingCats)
+                {
+                    Destroy(cat);
+                }
+            }
+
             noTime = true;
             Debug.Log("Te has quedado sin tiempo!");
             GameManager.Instance.GameOver();
