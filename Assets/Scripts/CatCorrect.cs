@@ -5,6 +5,7 @@ public class CatCorrect : MonoBehaviour
     private CatGenerator catGen;
     private AudioSource audioSource;
     private AudioClip[] correctSounds; // Array de sonidos
+    public bool touched=false;
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class CatCorrect : MonoBehaviour
 
     void OnMouseDown()
     {
+        touched = true;
         if (audioSource != null && correctSounds.Length > 0)
         {
             // Elegir un sonido aleatorio
